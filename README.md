@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # 📊 Complete Dashboard System with Backend
 
 A full-stack application with user authentication, file upload management, and admin controls, powered by Express.js and Firebase.
@@ -359,3 +360,6 @@ Built with:
 **Made with ❤️ for data management**
 
 Start managing your data efficiently today! 🎉
+=======
+# vs
+>>>>>>> 376b55ff737f9233a24aebfa334b27bd7679bc94
