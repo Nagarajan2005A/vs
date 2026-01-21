@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Dashboard</title>
+    <link rel="stylesheet" href="user-dashboard-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Dashboard</h2>
+                <span class="close-sidebar">✕</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span class="icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-section="upload">
+                    <span class="icon">📁</span>
+                    <span>Upload Data</span>
+                </a>
+                <a href="#" class="nav-item" data-section="history">
+                    <span class="icon">📜</span>
+                    <span>Upload History</span>
+                </a>
+                <a href="#" class="nav-item" data-section="analytics">
+                    <span class="icon">📈</span>
+                    <span>Analytics</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <button class="menu-toggle">☰</button>
+                <div class="header-left">
+                    <h1 id="page-title">Overview</h1>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-box" placeholder="Search...">
+                    <div class="user-profile">
+                        <span id="userName">User</span>
+                        <img src="https://via.placeholder.com/40" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <section class="content">
+                
+                <!-- Overview Section -->
+                <div id="overview" class="section active">
+                    <div class="welcome-card">
+                        <h2>Welcome Back! 👋</h2>
+                        <p id="welcomeMsg">Ready to manage your data?</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #3498db;">📁</div>
+                            <div class="stat-info">
+                                <h3>Total Uploads</h3>
+                                <p class="stat-value" id="totalUploads">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #2ecc71;">📊</div>
+                            <div class="stat-info">
+                                <h3>Total Records</h3>
+                                <p class="stat-value" id="totalRecords">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #e74c3c;">⏱️</div>
+                            <div class="stat-info">
+                                <h3>Last Upload</h3>
+                                <p class="stat-value" id="lastUpload">--</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-actions">
+                        <h3>Quick Actions</h3>
+                        <div class="action-buttons">
+                            <button class="action-btn" onclick="document.querySelector('[data-section=\"upload\"]').click()">
+                                <span>📤</span>
+                                <span>Upload File</span>
+                            </button>
+                            <button class="action-btn" onclick="document.querySelector('[data-section=\"history\"]').click()">
+                                <span>📜</span>
+                                <span>View History</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload Section -->
+                <div id="upload" class="section">
+                    <div class="upload-card">
+                        <div class="upload-header">
+                            <h2>📤 Upload Excel Data</h2>
+                            <p>Upload CSV or Excel files to store your data</p>
+                        </div>
+
+                        <div class="upload-area" id="uploadArea">
+                            <div class="upload-icon">📁</div>
+                            <h3>Drag and drop your file here</h3>
+                            <p>or click to browse</p>
+                            <input type="file" id="fileInput" accept=".csv,.xlsx,.xls" style="display: none;">
+                        </div>
+
+                        <div class="file-info" id="fileInfo" style="display: none;">
+                            <div class="file-details">
+                                <span class="file-name" id="fileName"></span>
+                                <span class="file-size" id="fileSize"></span>
+                            </div>
+                            <button class="btn-primary" onclick="uploadFile()">Upload</button>
+                            <button class="btn-secondary" onclick="clearFile()">Clear</button>
+                        </div>
+
+                        <div class="upload-progress" id="uploadProgress" style="display: none;">
+                            <div class="progress-bar">
+                                <div class="progress-fill" id="progressFill"></div>
+                            </div>
+                            <span id="progressText">0%</span>
+                        </div>
+
+                        <div class="upload-status" id="uploadStatus" style="display: none;">
+                            <span id="statusMsg"></span>
+                        </div>
+
+                        <div class="upload-tips">
+                            <h4>📋 Upload Requirements:</h4>
+                            <ul>
+                                <li>Supported formats: CSV, XLSX, XLS</li>
+                                <li>Maximum file size: 10 MB</li>
+                                <li>Headers should be in the first row</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Upload History Section -->
+                <div id="history" class="section">
+                    <div class="history-header">
+                        <h2>📜 Upload History</h2>
+                        <div class="history-controls">
+                            <input type="text" id="searchHistory" placeholder="Search uploads..." class="search-input">
+                            <button class="btn-secondary" onclick="exportHistory()">📥 Export</button>
+                        </div>
+                    </div>
+
+                    <div class="history-list" id="historyList">
+                        <p class="no-data">No uploads yet. Start by uploading a file!</p>
+                    </div>
+                </div>
+
+                <!-- Analytics Section -->
+                <div id="analytics" class="section">
+                    <div class="analytics-card">
+                        <h2>📈 Analytics</h2>
+                        <div class="chart-container">
+                            <canvas id="uploadChart"></canvas>
+                        </div>
+                    </div>
+
+                    <div class="analytics-stats">
+                        <div class="stat-box">
+                            <h4>Average File Size</h4>
+                            <p id="avgFileSize">0 MB</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Total Data Stored</h4>
+                            <p id="totalDataStored">0 MB</p>
+                        </div>
+                        <div class="stat-box">
+                            <h4>Upload Frequency</h4>
+                            <p id="uploadFreq">None</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="section">
+                    <div class="settings-card">
+                        <h2>⚙️ Settings</h2>
+                        
+                        <div class="settings-group">
+                            <h3>Account Settings</h3>
+                            <div class="setting-item">
+                                <label>Email Address</label>
+                                <input type="email" id="settingsEmail" readonly>
+                            </div>
+                            <div class="setting-item">
+                                <label>Full Name</label>
+                                <input type="text" id="settingsName">
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Notification Settings</h3>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="emailNotifications" checked>
+                                <label for="emailNotifications">Email Notifications</label>
+                            </div>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="uploadAlerts" checked>
+                                <label for="uploadAlerts">Upload Alerts</label>
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>Privacy</h3>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="dataSharing">
+                                <label for="dataSharing">Allow data sharing with administrators</label>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" onclick="saveSettings()">Save Settings</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Data Preview Modal -->
+    <div id="previewModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>📊 Data Preview</h2>
+                <button class="modal-close" onclick="closePreview()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div id="previewData"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/papaparse/5.4.1/paparse.min.js"></script>
+    <script src="user-dashboard-script.js"></script>
+</body>
+</html>

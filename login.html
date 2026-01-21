@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Dashboard</title>
+    <link rel="stylesheet" href="login-styles.css">
+</head>
+<body>
+    <div class="login-container">
+        <div class="login-box">
+            <div class="login-header">
+                <h1>Dashboard</h1>
+                <p>Secure Access Portal</p>
+            </div>
+
+            <!-- Login Type Selection -->
+            <div class="login-type-selector">
+                <button class="type-btn active" data-type="user">
+                    <span class="icon">👤</span>
+                    <span>User Login</span>
+                </button>
+                <button class="type-btn" data-type="admin">
+                    <span class="icon">🔐</span>
+                    <span>Admin Login</span>
+                </button>
+            </div>
+
+            <!-- User Login Form -->
+            <form id="userLoginForm" class="login-form active">
+                <div class="form-group">
+                    <label for="userEmail">Email Address</label>
+                    <input type="email" id="userEmail" placeholder="user@example.com" required>
+                    <span class="error-msg" id="userEmailError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="userPassword">Password</label>
+                    <div class="password-input">
+                        <input type="password" id="userPassword" placeholder="Enter your password" required>
+                        <button type="button" class="toggle-password">👁️</button>
+                    </div>
+                    <span class="error-msg" id="userPasswordError"></span>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="userRemember">
+                    <label for="userRemember">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-btn">Login as User</button>
+
+                <div class="login-footer">
+                    <a href="#forgot">Forgot Password?</a>
+                    <span>|</span>
+                    <a href="#signup">Sign Up</a>
+                </div>
+            </form>
+
+            <!-- Admin Login Form -->
+            <form id="adminLoginForm" class="login-form">
+                <div class="form-group">
+                    <label for="adminId">Admin ID</label>
+                    <input type="text" id="adminId" placeholder="Enter admin ID" required>
+                    <span class="error-msg" id="adminIdError"></span>
+                </div>
+
+                <div class="form-group">
+                    <label for="adminPassword">Admin Password</label>
+                    <div class="password-input">
+                        <input type="password" id="adminPassword" placeholder="Enter admin password" required>
+                        <button type="button" class="toggle-password">👁️</button>
+                    </div>
+                    <span class="error-msg" id="adminPasswordError"></span>
+                </div>
+
+                <div class="form-group checkbox">
+                    <input type="checkbox" id="adminRemember">
+                    <label for="adminRemember">Remember me</label>
+                </div>
+
+                <button type="submit" class="login-btn admin-btn">Login as Admin</button>
+
+                <div class="login-footer">
+                    <a href="#security">Security Info</a>
+                </div>
+            </form>
+
+            <!-- Demo Credentials -->
+            <div class="demo-credentials">
+                <p><strong>Demo Credentials:</strong></p>
+                <p>👤 User: user@example.com / password123</p>
+                <p>🔐 Admin: admin / admin123</p>
+            </div>
+        </div>
+
+        <div class="login-sidebar">
+            <div class="sidebar-content">
+                <h2>Welcome Back</h2>
+                <p>Access your dashboard to manage data, upload files, and monitor activities.</p>
+                <div class="features">
+                    <div class="feature">
+                        <span class="feature-icon">📊</span>
+                        <span>Analytics</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">📁</span>
+                        <span>File Upload</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">👥</span>
+                        <span>User Management</span>
+                    </div>
+                    <div class="feature">
+                        <span class="feature-icon">📝</span>
+                        <span>Reports</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="login-script.js"></script>
+</body>
+</html>

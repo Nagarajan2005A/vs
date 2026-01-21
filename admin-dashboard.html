@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="admin-dashboard-styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <h2>Admin Panel</h2>
+                <span class="close-sidebar">✕</span>
+            </div>
+            
+            <nav class="nav-menu">
+                <a href="#" class="nav-item active" data-section="overview">
+                    <span class="icon">📊</span>
+                    <span>Overview</span>
+                </a>
+                <a href="#" class="nav-item" data-section="users">
+                    <span class="icon">👥</span>
+                    <span>Manage Users</span>
+                </a>
+                <a href="#" class="nav-item" data-section="uploads">
+                    <span class="icon">📁</span>
+                    <span>All Uploads</span>
+                </a>
+                <a href="#" class="nav-item" data-section="reports">
+                    <span class="icon">📈</span>
+                    <span>Reports</span>
+                </a>
+                <a href="#" class="nav-item" data-section="settings">
+                    <span class="icon">⚙️</span>
+                    <span>Settings</span>
+                </a>
+            </nav>
+
+            <div class="sidebar-footer">
+                <button class="logout-btn" onclick="logout()">🚪 Logout</button>
+            </div>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Header -->
+            <header class="header">
+                <button class="menu-toggle">☰</button>
+                <div class="header-left">
+                    <h1 id="page-title">Overview</h1>
+                </div>
+                <div class="header-right">
+                    <input type="text" class="search-box" placeholder="Search...">
+                    <div class="user-profile">
+                        <span id="adminName">Admin</span>
+                        <img src="https://via.placeholder.com/40" alt="Profile">
+                    </div>
+                </div>
+            </header>
+
+            <!-- Content Area -->
+            <section class="content">
+                
+                <!-- Overview Section -->
+                <div id="overview" class="section active">
+                    <div class="admin-header">
+                        <h2>📊 System Overview</h2>
+                        <p>Administrator Dashboard</p>
+                    </div>
+
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #3498db;">👥</div>
+                            <div class="stat-info">
+                                <h3>Total Users</h3>
+                                <p class="stat-value" id="totalUsers">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #2ecc71;">📁</div>
+                            <div class="stat-info">
+                                <h3>Total Uploads</h3>
+                                <p class="stat-value" id="totalSystemUploads">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #e74c3c;">📊</div>
+                            <div class="stat-info">
+                                <h3>Total Records</h3>
+                                <p class="stat-value" id="totalSystemRecords">0</p>
+                            </div>
+                        </div>
+                        <div class="stat-card">
+                            <div class="stat-icon" style="background-color: #f39c12;">💾</div>
+                            <div class="stat-info">
+                                <h3>Storage Used</h3>
+                                <p class="stat-value" id="totalStorageUsed">0 MB</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="quick-stats">
+                        <div class="quick-stat-item">
+                            <span class="label">Active Users</span>
+                            <span class="value" id="activeUsers">0</span>
+                        </div>
+                        <div class="quick-stat-item">
+                            <span class="label">Pending Users</span>
+                            <span class="value" id="pendingUsers">0</span>
+                        </div>
+                        <div class="quick-stat-item">
+                            <span class="label">Today's Uploads</span>
+                            <span class="value" id="todayUploads">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- User Management Section -->
+                <div id="users" class="section">
+                    <div class="section-header">
+                        <div>
+                            <h2>👥 User Management</h2>
+                            <p>Add, edit, and manage user accounts and permissions</p>
+                        </div>
+                        <button class="btn-primary" onclick="openAddUserModal()">➕ Add New User</button>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" id="userSearchInput" placeholder="Search users..." class="search-input">
+                        <select id="roleFilter" class="filter-select">
+                            <option value="">All Roles</option>
+                            <option value="user">User</option>
+                            <option value="admin">Admin</option>
+                            <option value="editor">Editor</option>
+                        </select>
+                        <select id="statusFilter" class="filter-select">
+                            <option value="">All Status</option>
+                            <option value="active">Active</option>
+                            <option value="inactive">Inactive</option>
+                            <option value="pending">Pending</option>
+                        </select>
+                    </div>
+
+                    <div class="users-table-container">
+                        <table class="users-table">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th>Role</th>
+                                    <th>Status</th>
+                                    <th>Joined</th>
+                                    <th>Uploads</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="usersTableBody">
+                                <tr>
+                                    <td colspan="8" style="text-align: center; padding: 40px; color: #7f8c8d;">
+                                        No users found. Add a new user to get started!
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- All Uploads Section -->
+                <div id="uploads" class="section">
+                    <div class="section-header">
+                        <div>
+                            <h2>📁 All User Uploads</h2>
+                            <p>Monitor and manage all file uploads across the system</p>
+                        </div>
+                    </div>
+
+                    <div class="filter-bar">
+                        <input type="text" id="uploadSearchInput" placeholder="Search files..." class="search-input">
+                        <input type="date" id="uploadDateFilter" class="filter-select">
+                    </div>
+
+                    <div class="uploads-list" id="uploadsList">
+                        <p style="text-align: center; padding: 40px; color: #7f8c8d;">
+                            No uploads yet.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Reports Section -->
+                <div id="reports" class="section">
+                    <div class="section-header">
+                        <h2>📈 Reports</h2>
+                        <p>View system statistics and generate reports</p>
+                    </div>
+
+                    <div class="reports-grid">
+                        <div class="report-card">
+                            <h3>System Activity</h3>
+                            <div class="chart-placeholder">
+                                <canvas id="activityChart"></canvas>
+                            </div>
+                        </div>
+                        <div class="report-card">
+                            <h3>Upload Distribution</h3>
+                            <div class="chart-placeholder">
+                                <div style="text-align: center; padding: 40px; color: #7f8c8d;">
+                                    Chart visualization
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="report-actions">
+                        <button class="btn-secondary" onclick="generateReport('pdf')">📄 Generate PDF Report</button>
+                        <button class="btn-secondary" onclick="generateReport('csv')">📊 Export to CSV</button>
+                        <button class="btn-secondary" onclick="generateReport('excel')">📈 Export to Excel</button>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="section">
+                    <div class="settings-card">
+                        <h2>⚙️ System Settings</h2>
+                        
+                        <div class="settings-group">
+                            <h3>Upload Settings</h3>
+                            <div class="setting-item">
+                                <label>Maximum File Size (MB)</label>
+                                <input type="number" id="maxFileSize" value="10">
+                            </div>
+                            <div class="setting-item">
+                                <label>Allowed File Types</label>
+                                <input type="text" id="allowedFileTypes" value="csv, xlsx, xls">
+                            </div>
+                        </div>
+
+                        <div class="settings-group">
+                            <h3>System Configuration</h3>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="enableUserRegistration" checked>
+                                <label for="enableUserRegistration">Enable User Registration</label>
+                            </div>
+                            <div class="setting-item checkbox">
+                                <input type="checkbox" id="requireEmailVerification" checked>
+                                <label for="requireEmailVerification">Require Email Verification</label>
+                            </div>
+                        </div>
+
+                        <button class="btn-primary" onclick="saveAdminSettings()">Save Settings</button>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+
+    <!-- Add User Modal -->
+    <div id="addUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>➕ Add New User</h2>
+                <button class="modal-close" onclick="closeAddUserModal()">&times;</button>
+            </div>
+            <form id="addUserForm" class="modal-body">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="newUserName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="newUserEmail" placeholder="Enter email" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="newUserPassword" placeholder="Enter password" required>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="newUserRole" required>
+                        <option value="user">User</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Permissions</label>
+                    <div class="permission-list">
+                        <div class="permission-item">
+                            <input type="checkbox" id="perm_upload" checked>
+                            <label for="perm_upload">Upload Files</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" id="perm_download" checked>
+                            <label for="perm_download">Download Files</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" id="perm_delete">
+                            <label for="perm_delete">Delete Files</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" id="perm_view_reports">
+                            <label for="perm_view_reports">View Reports</label>
+                        </div>
+                        <div class="permission-item">
+                            <input type="checkbox" id="perm_manage_users">
+                            <label for="perm_manage_users">Manage Users</label>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Add User</button>
+                    <button type="button" class="btn-secondary" onclick="closeAddUserModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div id="editUserModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>✏️ Edit User</h2>
+                <button class="modal-close" onclick="closeEditUserModal()">&times;</button>
+            </div>
+            <form id="editUserForm" class="modal-body">
+                <div class="form-group">
+                    <label>Full Name</label>
+                    <input type="text" id="editUserName" placeholder="Enter full name" required>
+                </div>
+                <div class="form-group">
+                    <label>Email Address</label>
+                    <input type="email" id="editUserEmail" placeholder="Enter email" readonly>
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <select id="editUserRole" required>
+                        <option value="user">User</option>
+                        <option value="editor">Editor</option>
+                        <option value="admin">Admin</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Status</label>
+                    <select id="editUserStatus" required>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="modal-actions">
+                    <button type="submit" class="btn-primary">Save Changes</button>
+                    <button type="button" class="btn-secondary" onclick="closeEditUserModal()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="admin-dashboard-script.js"></script>
+</body>
+</html>
